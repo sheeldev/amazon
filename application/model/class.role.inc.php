@@ -42,29 +42,6 @@ class role
 		return '{_no_role}';
 	}
 	/**
-	* Function to fetch a particular role count within the subscription table
-	*
-	* @param       integer        role id
-	*
-	* @return      string         Returns the role count
-	*/
-	function fetch_subscription_role_count($roleid = 0)
-	{
-		$sql = $this->sheel->db->query("
-			SELECT COUNT(*) AS total
-			FROM " . DB_PREFIX . "subscription
-			WHERE roleid = '" . intval($roleid) . "'
-				AND active = 'yes'
-				AND (visible_registration != '0' OR visible_upgrade != '0')
-		", 0, null, __FILE__, __LINE__);
-		if ($this->sheel->db->num_rows($sql) > 0)
-		{
-			$res = $this->sheel->db->fetch_array($sql);
-			return (int)$res['total'];
-		}
-		return 0;
-	}
-	/**
 	* Function to print the role pulldown menu with selected options as the roles
 	*
 	* @param       string         selected role option
@@ -114,7 +91,6 @@ class role
 		{
 			while ($roles = $this->sheel->db->fetch_array($sqlroles, DB_ASSOC))
 			{
-				$roleattach = $this->fetch_subscription_role_count($roles['roleid']);
 				if (isset($adminmode) AND $adminmode OR $roleattach > 0)
 				{
 					$arr[$roles['roleid']] = stripslashes($roles['title']) . ' - ' . stripslashes($roles['purpose']);

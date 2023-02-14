@@ -29,6 +29,16 @@ $router->map('GET|POST', '/ajax', __DIR__ . '/application/web/client/ajax.php', 
 $router->map('GET|POST', '/register/', __DIR__ . '/application/web/client/registration.php', 'registration');
 $router->map('GET|POST', '/register/[activate|welcome|verification|moderation:view]/', __DIR__ . '/application/web/client/registration.php', 'registration_view');
 $router->map('GET|POST', '/attachment/[captcha:do]/', __DIR__ . '/application/web/client/captcha.php', 'captcha');
+$router->map('GET',      '/home/', __DIR__ . '/application/web/client/home.php', 'home');
+
+
+
+
+
+$router->map('GET|POST', '/admin/', __DIR__ . '/application/web/admin/dashboard.php', 'admin_dashboard');
+$router->map('GET|POST', '/admin/signin/', __DIR__ . '/application/web/admin/login.php', 'admin_login');
+$router->map('GET|POST', '/admin/signin/[renew-password:cmd]/', __DIR__ . '/application/web/admin/login.php', 'admin_login_renew');
+$router->map('GET|POST', '/admin/signin/[*:cmd]/', __DIR__ . '/application/web/admin/login.php', 'admin_logout');
 
 
 if (file_exists(__DIR__ . '/router_custom.php'))

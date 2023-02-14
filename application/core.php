@@ -127,6 +127,9 @@ $sheel->registration = new registration($sheel);
 require_once(__DIR__ . '/model/class.code.inc.php');
 $sheel->code = new code($sheel);
 
+require_once(__DIR__ . '/model/class.permissions.inc.php');
+$sheel->permissions = new permissions($sheel);
+
 
 
 

@@ -161,7 +161,7 @@ class sheel_database
 				");
 			}
 		}
-			echo ('MySQL error      : ' . $this->error() . 'Error number     : ' . $this->errno());
+			echo ('MySQL error      : ' . stripslashes($this->sheel->db->escape_string(trim($messageemail))));
 			exit();
 	}
 	/**

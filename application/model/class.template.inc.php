@@ -3,7 +3,7 @@
  * Template class to perform the majority of custom template operations in sheel
  *
  * @package      sheel\Template
- * @version	6.0.0.622
+ * @version		 1.0.0.0
  * @author       sheel
  */
 class template

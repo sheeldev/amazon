@@ -323,17 +323,14 @@ class sessions
 		$noremember = array('registration', 'attachment', 'login', 'admin', 'cron', 'ipn', 'ajax');
 		if (empty($_SESSION['sheeldata']['user']['userid']) and !empty($_COOKIE[COOKIE_PREFIX . 'password']) and !empty($_COOKIE[COOKIE_PREFIX . 'username']) and !empty($_COOKIE[COOKIE_PREFIX . 'userid']) and defined('LOCATION') and !in_array(LOCATION, $noremember)) {
 			$sql = $this->sheel->db->query("
-				SELECT u.*, su.roleid, su.subscriptionid, su.active, sp.cost, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso
+				SELECT u.*, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso
 				FROM " . DB_PREFIX . "users AS u
-				LEFT JOIN " . DB_PREFIX . "subscription_user su ON u.user_id = su.user_id
-				LEFT JOIN " . DB_PREFIX . "subscription sp ON su.subscriptionid = sp.subscriptionid
 				LEFT JOIN " . DB_PREFIX . "currency c ON u.currencyid = c.currency_id
 				LEFT JOIN " . DB_PREFIX . "language l ON u.languageid = l.languageid
 				WHERE u.username = '" . $this->sheel->db->escape_string($this->sheel->crypt->decrypt($_COOKIE[COOKIE_PREFIX . 'username'])) . "'
 					AND u.password = '" . $this->sheel->db->escape_string($this->sheel->crypt->decrypt($_COOKIE[COOKIE_PREFIX . 'password'])) . "'
 					AND u.user_id = '" . intval($this->sheel->crypt->decrypt($_COOKIE[COOKIE_PREFIX . 'userid'])) . "'
 					AND u.status = 'active'
-					AND sp.type = 'product'
 				GROUP BY username
 				LIMIT 1
 			", 0, null, __FILE__, __LINE__);
@@ -453,6 +450,7 @@ class sessions
 				'isadmin' => $userinfo['isadmin'],
 				'status' => $userinfo['status'],
 				'userid' => $userinfo['user_id'],
+				'companyid' => $userinfo['companyid'],
 				'username' => $userinfo['username'],
 				'usernameslug' => $userinfo['usernameslug'],
 				'usernamehash' => $userinfo['usernamehash'],

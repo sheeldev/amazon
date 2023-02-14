@@ -183,15 +183,17 @@ if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'content' and isset($she
                 'content' => ((!empty($res['description_html'])) ? $res['description_html'] : $res['description']),
                 'navmobile' => $nav1
             );
-            
+
             $sheel->template->meta['areatitle'] = '{_content} <div class="smaller">' . o($res['title']) . '</div>';
             $sheel->template->meta['pagetitle'] = o($res['title']) . ' | ' . SITE_NAME;
             $sheel->template->meta['keywords'] = o($res['keywords']);
             $sheel->template->meta['description'] = $sheel->shorten(o(strip_tags($sheel->bbcode->strip_bb_tags(trim(preg_replace("/[\\n\\r\\t]+/", ' ', $res['subtitle']))))), 200);
             $sheel->template->fetch('main', 'main_custom_landing_page.html');
-            $sheel->template->parse_hash('main', array(
-                'ilpage' => $sheel->ilpage
-            )
+            $sheel->template->parse_hash(
+                'main',
+                array(
+                    'ilpage' => $sheel->ilpage
+                )
             );
             $sheel->template->pprint('main', $vars);
 

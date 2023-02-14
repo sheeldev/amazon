@@ -1064,6 +1064,7 @@ class sheel
         }
         $validfields = array(
             'user_id',
+            'companyid',
             'ipaddress',
             'iprestrict',
             'username',
@@ -1459,15 +1460,11 @@ class sheel
         $userinfo['subscriptionid'] = $userinfo['cost'] = 0;
         $userinfo['active'] = 'no';
         $sql = $this->db->query("
-			SELECT u.*, su.roleid, su.subscriptionid, su.active, sp.cost, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
+			SELECT u.*,c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
 			FROM " . DB_PREFIX . "users AS u
-			LEFT JOIN " . DB_PREFIX . "subscription_user su ON u.user_id = su.user_id
-			LEFT JOIN " . DB_PREFIX . "subscription sp ON su.subscriptionid = sp.subscriptionid
 			LEFT JOIN " . DB_PREFIX . "currency c ON u.currencyid = c.currency_id
 			LEFT JOIN " . DB_PREFIX . "language l ON u.languageid = l.languageid
-			LEFT JOIN " . DB_PREFIX . "stores st ON su.user_id = st.user_id
 			WHERE u.facebook_id = '" . $this->db->escape_string($id) . "'
-				AND sp.type = 'product'
 			GROUP BY u.facebook_id
 			LIMIT 1
 		");
@@ -1507,15 +1504,12 @@ class sheel
         $userinfo['subscriptionid'] = $userinfo['cost'] = 0;
         $userinfo['active'] = 'no';
         $sql = $this->db->query("
-			SELECT u.*, su.roleid, su.subscriptionid, su.active, sp.cost, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
+			SELECT u.*, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
 			FROM " . DB_PREFIX . "users AS u
-			LEFT JOIN " . DB_PREFIX . "subscription_user su ON u.user_id = su.user_id
-			LEFT JOIN " . DB_PREFIX . "subscription sp ON su.subscriptionid = sp.subscriptionid
 			LEFT JOIN " . DB_PREFIX . "currency c ON u.currencyid = c.currency_id
 			LEFT JOIN " . DB_PREFIX . "language l ON u.languageid = l.languageid
 			LEFT JOIN " . DB_PREFIX . "stores st ON su.user_id = st.user_id
 			WHERE u.twitter_id = '" . $this->db->escape_string($id) . "'
-				AND sp.type = 'product'
 			GROUP BY u.twitter_id
 			LIMIT 1
 		");
@@ -1555,15 +1549,12 @@ class sheel
         $userinfo['subscriptionid'] = $userinfo['cost'] = 0;
         $userinfo['active'] = 'no';
         $sql = $this->db->query("
-			SELECT u.*, su.roleid, su.subscriptionid, su.active, sp.cost, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
+			SELECT u.*, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
 			FROM " . DB_PREFIX . "users AS u
-			LEFT JOIN " . DB_PREFIX . "subscription_user su ON u.user_id = su.user_id
-			LEFT JOIN " . DB_PREFIX . "subscription sp ON su.subscriptionid = sp.subscriptionid
 			LEFT JOIN " . DB_PREFIX . "currency c ON u.currencyid = c.currency_id
 			LEFT JOIN " . DB_PREFIX . "language l ON u.languageid = l.languageid
 			LEFT JOIN " . DB_PREFIX . "stores st ON su.user_id = st.user_id
 			WHERE u.linkedin_id = '" . $this->db->escape_string($id) . "'
-				AND sp.type = 'product'
 			GROUP BY u.linkedin_id
 			LIMIT 1
 		");
@@ -1603,15 +1594,12 @@ class sheel
         $userinfo['subscriptionid'] = $userinfo['cost'] = 0;
         $userinfo['active'] = 'no';
         $sql = $this->db->query("
-			SELECT u.*, su.roleid, su.subscriptionid, su.active, sp.cost, c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
+			SELECT u.*,c.currency_name, c.currency_abbrev, l.languagecode, l.languageiso, st.storeid, st.seourl
 			FROM " . DB_PREFIX . "users AS u
-			LEFT JOIN " . DB_PREFIX . "subscription_user su ON (u.user_id = su.user_id)
-			LEFT JOIN " . DB_PREFIX . "subscription sp ON (su.subscriptionid = sp.subscriptionid)
 			LEFT JOIN " . DB_PREFIX . "currency c ON (u.currencyid = c.currency_id)
 			LEFT JOIN " . DB_PREFIX . "language l ON (u.languageid = l.languageid)
 			LEFT JOIN " . DB_PREFIX . "stores st ON (su.user_id = st.user_id)
 			WHERE u.ldap_id = '" . $this->db->escape_string($id) . "'
-				AND sp.type = 'product'
 			GROUP BY u.ldap_id
 			LIMIT 1
 		");

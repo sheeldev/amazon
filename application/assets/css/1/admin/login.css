@@ -447,11 +447,11 @@ h3, h4, h5, h6 {
 }
 
 a {
-    color: #3084CA
+    color: #ffb300
 }
 
 a:hover {
-    color: #3a9ef0
+    color: #FDB819
 }
 
 p {
@@ -753,7 +753,7 @@ ol.horizontal:after, .row:after, .header-row:after, .tabs:after {
     height: 32px;
     line-height: 30px;
     padding: 0 9px;
-    color: #479ccf;
+    color: #FDB819;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
     border: 1px solid #e3e3e3;
@@ -776,7 +776,7 @@ ol.horizontal:after, .row:after, .header-row:after, .tabs:after {
 }
 
 .btn:not(.disabled):hover {
-    color: #479ccf;
+    color: #e2c889;
     background: #efefef;
     border-color: #d6d6d6;
     box-shadow: none
@@ -792,15 +792,15 @@ ol.horizontal:after, .row:after, .header-row:after, .tabs:after {
 
 .btn-primary, .btn.green-btn {
     color: #fff;
-    border-color: #2f82b4;
-    background: #479ccf
+    border-color: #FDB819;
+    background: #e2c889
 }
 
 .btn.btn-primary:hover, .btn-primary:focus, .btn.green-btn:hover,
 .btn.green-btn:focus {
     color: #fff;
-    background: #3491c8;
-    border-color: #2a74a0
+    background: #e2c889;
+    border-color: #FDB819
 }
 
 .btn-primary:not(.disabled):active, .btn-primary:not(.disabled).active,
@@ -1038,7 +1038,7 @@ input[type=checkbox], input[type=radio] {
 }
 
 input:focus, input.focus, textarea:focus, textarea.focus {
-    border-color: #4c90ee;
+    border-color: #e2c889;
     outline: none
 }
 
@@ -2621,7 +2621,7 @@ input.error-highlight-warning {
     display: inline-block;
     width: 100% !important;
     color: #fff;
-    background: #479ccf;
+    background: #000000;
     border: none;
     font-family: "ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 18px;
@@ -2629,7 +2629,8 @@ input.error-highlight-warning {
 }
 
 .dialog-btn:hover, .dialog-btn:focus {
-    background: #4293c2
+    background: #FDB819;
+    color: #000;
 }
 
 .alternate-login {
@@ -2703,7 +2704,7 @@ input.error-highlight-warning {
 }
 
 .no-js a {
-    color: #479ccf
+    color: #e2c889
 }
 
 .dialog-actions input[type=submit] {
