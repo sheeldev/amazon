@@ -28,8 +28,8 @@ class admincp_nav extends admincp
                                 </a>
                                 <a class="btn btn--plain tooltip tooltip-right-align tooltip-bottom tooltip-bottom--light-arrow" title="Front End" href="' . HTTPS_SERVER . '" target="_blank">
                                         <span class="glyphicons glyphicons-new-window draw-icon" aria-hidden="true"></span>
-                                        <span class="helper--visually-hidden">View your marketplace</span>
-                                        <div class="tooltip-container"> <span class="tooltip-label tooltip--view-website tooltip-label--light">View your marketplace</span> </div>
+                                        <span class="helper--visually-hidden">User Access</span>
+                                        <div class="tooltip-container"> <span class="tooltip-label tooltip--view-website tooltip-label--light">User Access</span> </div>
                                 </a>
                         </header>
                         <section id="GlobalSearch" role="search" define="{globalSearch: new Sheel.GlobalSearch(this, \'\')}" context="globalSearch" class="draw-nav__search">
@@ -261,16 +261,9 @@ s
                                                         <div class="draw-popover__content-wrapper">
                                                                 <div class="draw-popover__content" style="max-height: 300px;">
                                                                         <div class="draw-popover__pane">
+                                                                           
                                                                                 <div class="draw-popover__section">
-                                                                                        <ul class="unstyled">
-                                                                                                <li> <a class="draw-nav__popover-link" target="_blank" href="https://www.sheel.com/documentation/">ILance Docs</a> </li>
-                                                                                                <li> <a class="draw-nav__popover-link" target="_blank" href="https://ecommerce.sheel.com">ILance News</a> </li>
-                                                                                                <li> <a class="draw-nav__popover-link" target="_blank" href="https://community.sheel.com">ILance Community</a> </li>
-                                                                                        </ul>
-                                                                                </div>
-                                                                                <div class="draw-popover__section">
-                                                                                        <ul class="unstyled">
-                                                                                                <li> <a class="draw-nav__popover-link" href="' . HTTPS_SERVER_ADMIN . 'customers/update/' . (isset($_SESSION['sheeldata']['user']['userid']) ? $_SESSION['sheeldata']['user']['userid'] : 0) . '/">Your Profile</a> </li>
+                                                                                        <ul class="unstyled">                                                                                                
                                                                                                 <li> <a class="draw-nav__popover-link" href="' . HTTPS_SERVER_ADMIN . 'signin/signout/">{_log_out}</a> </li>
                                                                                         </ul>
                                                                                 </div>

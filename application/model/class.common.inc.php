@@ -1285,11 +1285,11 @@ class common
 		}
 		if (!empty($remote)) { // record views for category, items and stores
 			$countryid = $this->sheel->common_location->fetch_country_id($_SERVER['GEOIP_COUNTRY'], $this->sheel->language->fetch_site_slng());
-			$regionid = $this->sheel->shipping->fetch_region_by_countryid($countryid, false, true);
+			$regionid = $this->sheel->common_location->fetch_region_by_countryid($countryid, false, true);
 			unset($countryid);
 			$this->sheel->db->query("
 				INSERT INTO " . DB_PREFIX . "hits
-				(id, userid, url, datetime, agent, ipaddress, regionid, storeid, bsin, owner_cd, cid, project_id)
+				(id, userid, url, datetime, agent, ipaddress, regionid)
 				VALUES (
 				NULL,
 				'" . $this->sheel->db->escape_string($uid) . "',
@@ -1310,6 +1310,7 @@ class common
 					AND device = '" . $this->sheel->db->escape_string($device) . "'
 				LIMIT 1
 			", 0, null, __FILE__, __LINE__);
+			
 			if ($this->sheel->db->num_rows($sql) > 0) {
 				$res = $this->sheel->db->fetch_array($sql, DB_ASSOC);
 				if ($res['pageviews'] <= 100) {

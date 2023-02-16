@@ -815,5 +815,50 @@ class common_location extends common
 		}
 		return $response;
 	}
+
+		/**
+	* Function to fetch region title/name by a country id
+	*
+	* This function
+	*
+	* @param       integer        country id
+	* @param       boolean        convert full title (North America) to (north_america) (default true)
+	*
+	* @return      string         Returns HTML formatted string
+	*/
+	function fetch_region_by_countryid($countryid = 0, $doformatting = true, $regionidonly = false)
+	{
+		$html = '';
+		$slng = ((isset($_SESSION['sheeldata']['user']['slng'])) ? $_SESSION['sheeldata']['user']['slng'] : 'eng');
+		$sql = $this->sheel->db->query("
+			SELECT " . (MYSQL_QUERYCACHE ? "SQL_CACHE " : "") . "r.regionid, r.region_$slng AS region
+			FROM " . DB_PREFIX . "locations l
+			LEFT JOIN " . DB_PREFIX . "locations_regions r ON (r.regionid = l.regionid)
+			WHERE l.locationid = '" . intval($countryid) . "'
+			LIMIT 1
+		", 0, null, __FILE__, __LINE__);
+		if ($this->sheel->db->num_rows($sql) > 0)
+		{
+			$res = $this->sheel->db->fetch_array($sql, DB_ASSOC);
+			$html = $res['region'];
+			if ($doformatting)
+			{
+				$html = str_replace(' ', '_', $html);
+				$html = strtolower($html);
+			}
+			if ($regionidonly)
+			{
+				$html = $res['regionid'];
+			}
+		}
+		else
+		{
+			if ($regionidonly)
+			{
+				$html = 0;
+			}
+		}
+		return $html;
+	}
 }
 ?>

@@ -273,7 +273,7 @@ if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == '_pw-renew') { // renew 
 		if ($sheel->db->num_rows($sql) > 0) {
 			$user = $sheel->db->fetch_array($sql, DB_ASSOC);
 			$otpcode = $sheel->code->get_code($user['user_id'], '2', 5);
-			if ($otpcode['expired'] = 1) {
+			if ($otpcode['expired'] == 1) {
 				$sheel->email->mail = $user['email'];
 				$sheel->email->slng = $sheel->language->fetch_user_slng($user['user_id']);
 				$sheel->email->get('forgot_password');

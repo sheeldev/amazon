@@ -1672,6 +1672,28 @@ class admincp
         }
 	function stats($what = '', $period = 'today')
 	{
+                if ($what == 'home')
+		{
+                        $stats = array(
+                               
+                                'visitors' => array(
+					'visitors' => $this->sheel->admincp_stats->fetch($what, $period, 'visitors'),
+					'uniquevisitors' => $this->sheel->admincp_stats->fetch($what, $period, 'uniquevisitors'),
+					'label' => $this->sheel->admincp_stats->fetch($what, $period, 'visitorlabel'),
+					'series' => $this->sheel->admincp_stats->fetch($what, $period, 'visitorseries'),
+                                        'pageviews' => $this->sheel->admincp_stats->fetch($what, $period, 'pageviews'),
+                                        'mostactive' => $this->sheel->admincp_stats->fetch($what, $period, 'mostactive'),
+				),  
+				'stats' => array(
+					'topcountries' => $this->sheel->admincp_stats->fetch($what, $period, 'topcountries'),
+					'topdevices' => $this->sheel->admincp_stats->fetch($what, $period, 'topdevices'),
+					'topbrowsers' => $this->sheel->admincp_stats->fetch($what, $period, 'topbrowsers'),
+					'trafficsources' => $this->sheel->admincp_stats->fetch($what, $period, 'trafficsources'),
+					'toplandingpages' => $this->sheel->admincp_stats->fetch($what, $period, 'toplandingpages')
+				)
+			);
+		}
+
 		if ($what == 'dashboard')
 		{
                         $stats = array(

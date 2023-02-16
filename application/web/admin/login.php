@@ -9,10 +9,13 @@ $sheel->template->meta['jsinclude'] = array(
 		'functions',
 		'vendor/jquery_' . JQUERYVERSION,
 		'vendor/growl',
-		'admin'
+		'admin',
+		'login',
+        'password_strength'
 	),
 	'footer' => array(
-		'md5'
+		'md5',
+		'others'
 	)
 );
 $sheel->template->meta['cssinclude'] = array(
@@ -41,62 +44,186 @@ if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'signout') {
 	session_destroy();
 	refresh(HTTPS_SERVER_ADMIN);
 	exit();
-} 
-else if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'renew-password') {
+} else if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'renew-password') {
 	$sheel->template->meta['areatitle'] = '{_admin_password_renewal_menu}';
 	$sheel->template->meta['pagetitle'] = SITE_NAME . ' - {_admin_password_renewal_menu}';
 	$admin_cookie = '';
 	if (!empty($_COOKIE[COOKIE_PREFIX . 'username'])) {
 		$admin_cookie = $sheel->crypt->decrypt($_COOKIE[COOKIE_PREFIX . 'username']);
 	}
-	if (isset($sheel->GPC['subcmd']) and $sheel->GPC['subcmd'] == 'process') {
-		$sql = $sheel->db->query("
-                        SELECT user_id, email, username
-                        FROM " . DB_PREFIX . "users
-                        WHERE (username = '" . $sheel->db->escape_string($sheel->GPC['username']) . "' OR email = '" . $sheel->db->escape_string($sheel->GPC['username']) . "')
-                                AND isadmin = '1'
-                        LIMIT 1
-                ");
-		if ($sheel->db->num_rows($sql) > 0) {
-			$sheel->show['error_login'] = false;
-			$res = $sheel->db->fetch_array($sql, DB_ASSOC);
-			$salt = $sheel->construct_password_salt(5);
-			$newp = $sheel->construct_password(8);
-			$pass = md5(md5($newp) . $salt);
-			$sheel->db->query("
-                                UPDATE " . DB_PREFIX . "users
-                                SET password = '" . $sheel->db->escape_string($pass) . "',
-				salt = '" . $sheel->db->escape_string($salt) . "',
-				password_lastchanged = '" . DATETIME24H . "'
-                                WHERE user_id = '" . intval($res['user_id']) . "'
-                                LIMIT 1
-                        ");
-			$subject = "New password generated for " . SITE_NAME . " Admin CP";
-			$message = "Administrator,\n\nYou or someone else has requested to renew the administration password for your account on " . DATETIME24H . ".  Please find the following information below to sign-in:
-						Username: " . stripslashes($res['username']) . "
-						New Password: " . $newp . "
-						------------------------------------------
-						Password change request from IP: " . IPADDRESS . "
-						Device/Agent: " . USERAGENT . "
-						** If you did not request the password to be changed please consider adding the above IP address to your marketplace blacklist and/or at the firewall level.
-						" . SITE_NAME . "
-						" . HTTPS_SERVER;
-			$sheel->email->mail = $res['email'];
-			$sheel->email->subject = $subject;
-			$sheel->email->message = $message;
-			$sheel->email->send();
-			$sheel->show['password_renewed'] = true;
-		} else {
-			$sheel->show['error_login'] = true;
-			$sheel->show['password_renewed'] = false;
-		}
-	}
 	$vars = array('admin_cookie' => $admin_cookie, 'sidenav' => '');
-
 	$sheel->template->fetch('main', 'login_pwrenew.html', 1);
 	$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
 	$sheel->template->pprint('main', $vars);
 	exit();
+} else if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'renew-password-otp') {
+	$sheel->template->meta['areatitle'] = '{_admin_password_renewal_menu}';
+	$sheel->template->meta['pagetitle'] = SITE_NAME . ' - {_admin_password_renewal_menu}';
+	$sql = $sheel->db->query("
+					SELECT user_id, email, username, first_name, last_name, phone, status
+					FROM " . DB_PREFIX . "users
+					WHERE email = '" . $sheel->GPC['email'] . "'	
+					AND isadmin = '1'
+					LIMIT 1
+				");
+
+	if ($sheel->db->num_rows($sql) > 0) {
+		$user = $sheel->db->fetch_array($sql, DB_ASSOC);
+		$otpcode = $sheel->code->get_code($user['user_id'], '2', 5);
+		if ($otpcode['expired'] == 1) {
+			$sheel->email->mail = $user['email'];
+			$sheel->email->slng = $sheel->language->fetch_user_slng($user['user_id']);
+			$sheel->email->get('forgot_password');
+			$sheel->email->set(
+				array(
+					'{{username}}' => $user['username'],
+					'{{user_id}}' => $user['user_id'],
+					'{{first_name}}' => $user['first_name'],
+					'{{last_name}}' => $user['last_name'],
+					'{{code}}' => $otpcode['code']
+				)
+			);
+			$sheel->email->send();
+		}
+		$vars = array(
+			'email' => $user['email'],
+			'expiry' => $otpcode['expiry'],
+			'sidenav' => ''
+		);
+		$sheel->template->fetch('main', 'login_pwotp.html', 1);
+		$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
+		$sheel->template->pprint('main', $vars);
+		exit();
+	} else {
+		$sheel->show['error_login'] = '1';
+		$vars = array(
+			'email' => $user['email'],
+			'expiry' => $otpcode['expiry'],
+			'admin_cookie' => $admin_cookie,
+			'sidenav' => ''
+		);
+		$sheel->template->fetch('main', 'login_pwrenew.html', 1);
+		$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
+		$sheel->template->pprint('main', $vars);
+	}
+} else if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'renew-password-after-otp' and isset($sheel->GPC['otp']) and isset($sheel->GPC['email'])) { // user validating otp
+	$sheel->template->meta['areatitle'] = '{_admin_password_renewal_menu}';
+	$sheel->template->meta['pagetitle'] = SITE_NAME . ' - {_admin_password_renewal_menu}';
+	$otp = strip_tags($sheel->GPC['otp']);
+	$email = strip_tags($sheel->GPC['email']);
+	$group = 'RST';
+	$sql = $sheel->db->query("
+			SELECT user_id, email, username, status
+			FROM " . DB_PREFIX . "users
+			WHERE email = '" . $email . "'
+			AND isadmin = '1'
+			LIMIT 1
+			");
+	if ($sheel->db->num_rows($sql) > 0) {
+		$user = $sheel->db->fetch_array($sql, DB_ASSOC);
+		$sqlgroup = $sheel->db->query("
+			SELECT id
+			FROM " . DB_PREFIX . "code_groups
+			WHERE code = '" . $group . "'
+			LIMIT 1
+			");
+
+		if ($sheel->db->num_rows($sqlgroup) > 0) {
+			$codegroup = $sheel->db->fetch_array($sqlgroup, DB_ASSOC);
+			$dbcode = $sheel->code->get_code($user['user_id'], $codegroup['id']);
+			if ($otp == $dbcode['code']) {
+				$sheel->code->set_verified($dbcode['id']);
+			} else {
+				$sheel->show['error_otp'] = '1';
+				$vars = array(
+					'email' => $user['email'],
+					'expiry' => $dbcode['expiry'],
+					'admin_cookie' => $admin_cookie,
+					'sidenav' => ''
+				);
+				$sheel->template->fetch('main', 'login_pwotp.html', 1);
+				$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
+				$sheel->template->pprint('main', $vars);
+				exit();
+			}
+			$vars = array(
+				'email' => $user['email'],
+				'admin_cookie' => $admin_cookie,
+				'sidenav' => ''
+			);
+		}
+	}
+	$vars = array(
+		'email' => $user['email'],
+		'otp' => $dbcode['code'],
+		'admin_cookie' => $admin_cookie,
+		'sidenav' => ''
+	);
+	$sheel->template->fetch('main', 'login_pwotp_after.html', 1);
+	$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
+	$sheel->template->pprint('main', $vars);
+	exit();
+
+} else if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'renew-password-change' and isset($sheel->GPC['email']) and isset($sheel->GPC['password']) and isset($sheel->GPC['password2'])) { // user changing password
+	$email = strip_tags($sheel->GPC['email']);
+	$password =  strip_tags($sheel->GPC['password']);
+	$password2 =  strip_tags($sheel->GPC['password2']);
+	$sql = $sheel->db->query("
+		SELECT user_id
+		FROM " . DB_PREFIX . "users
+		WHERE email = '" . $sheel->db->escape_string($email) . "'
+	");
+	if ($sheel->db->num_rows($sql) > 0) {
+		$res = $sheel->db->fetch_array($sql, DB_ASSOC);
+		$userid = $res['user_id'];
+	} else {
+		$sheel->show['error_email'] = '1';
+		$vars = array(
+			'email' => $sheel->GPC['email'],
+			'otp' => $sheel->GPC['otp'],
+			'admin_cookie' => $admin_cookie,
+			'sidenav' => ''
+		);
+		$sheel->template->fetch('main', 'login_pwotp_after.html', 1);
+		$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
+		$sheel->template->pprint('main', $vars);
+		exit();
+	}
+	if ($password == $password2) {
+		$salt = $sheel->construct_password_salt(5);
+		$newpasswordmd5 = md5(md5($password) . $salt);
+		$sheel->db->query("
+			UPDATE " . DB_PREFIX . "users
+			SET password = '" . $sheel->db->escape_string($newpasswordmd5) . "',
+			salt = '" . $sheel->db->escape_string($salt) . "',
+			password_lastchanged = '" . DATETIME24H . "'
+			WHERE user_id = '" . intval($userid) . "'
+		");
+		$sheel->show['passwordchange'] = 'success';
+		
+		$sheel->template->meta['areatitle'] = '{_login_area_menu}';
+		$sheel->template->meta['pagetitle'] = SITE_NAME . ' - {_login_area_menu}';
+		$username = isset($sheel->GPC['username']) ? o($sheel->GPC['username']) : '';
+		$password = isset($sheel->GPC['password']) ? o($sheel->GPC['password']) : '';
+		$redirect = '/admin/';
+		$vars = array('username' => $username, 'password' => $password, 'redirect' => $redirect, 'sidenav' => '');
+		$sheel->template->fetch('main', 'login.html', 1);
+		$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
+		$sheel->template->pprint('main', $vars);
+		exit();
+	} else {
+		$sheel->show['error_password'] = '1';
+		$vars = array(
+			'cmd' => 'renew-password-after-otp',
+			'email' => $sheel->GPC['email'],
+			'otp' => $sheel->GPC['otp'],
+			'sidenav' => ''
+		);
+		$sheel->template->fetch('main', 'login_pwotp_after.html', 1);
+		$sheel->template->parse_hash('main', array('ilpage' => $sheel->ilpage));
+		$sheel->template->pprint('main', $vars);
+		exit();
+	}
 } else { // sign-in
 	$sheel->template->meta['areatitle'] = '{_login_area_menu}';
 	$sheel->template->meta['pagetitle'] = SITE_NAME . ' - {_login_area_menu}';
@@ -122,4 +249,6 @@ else if (isset($sheel->GPC['cmd']) and $sheel->GPC['cmd'] == 'renew-password') {
 	$sheel->template->pprint('main', $vars);
 	exit();
 }
+
+
 ?>

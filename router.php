@@ -35,7 +35,7 @@ $router->map('GET',      '/home/', __DIR__ . '/application/web/client/home.php',
 
 
 
-$router->map('GET|POST', '/admin/', __DIR__ . '/application/web/admin/dashboard.php', 'admin_dashboard');
+$router->map('GET|POST', '/admin/', __DIR__ . '/application/web/admin/home.php', 'admin_home');
 $router->map('GET|POST', '/admin/signin/', __DIR__ . '/application/web/admin/login.php', 'admin_login');
 $router->map('GET|POST', '/admin/signin/[renew-password:cmd]/', __DIR__ . '/application/web/admin/login.php', 'admin_login_renew');
 $router->map('GET|POST', '/admin/signin/[*:cmd]/', __DIR__ . '/application/web/admin/login.php', 'admin_logout');

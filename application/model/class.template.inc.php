@@ -1489,7 +1489,7 @@ class template
 		$this->minify_output($node);
 
 		$html .= $this->templateregistry["$node"];
-		//$this->sheel->common->init_pageview_tracker();
+		$this->sheel->common->init_pageview_tracker();
 		$this->sheel->timer->stop();
 		$this->runtime = $this->sheel->timer->get();
 		if (!$echo) {

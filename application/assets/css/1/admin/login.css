@@ -968,6 +968,7 @@ input.btn.red-btn, a.btn.red-btn, input.btn.red-btn:hover, a.btn.red-btn:hover {
     color: #333;
     line-height: 21px;
     margin: 0 auto;
+    font-family: "ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: normal;
     border: 0
 }
@@ -2156,6 +2157,21 @@ label {
     padding: 2px 0
 }
 
+.status.success {
+    background-color: #fcf5d9;
+    color: #118002;
+    border-bottom: 1px solid #ffe4e4;
+    border-radius: 3px 3px 0 0;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-size: 16px
+}
+
+.status.success p {
+    color: #118002;
+    padding: 2px 0
+}
+
 .status.require-cookies {
     background: #fff1f1;
     border-radius: 8px !important;
@@ -2611,6 +2627,41 @@ input.error-highlight-warning {
 
 .forgot-password:hover {
     opacity: 1
+}
+.dialog-btn-otp {
+    border-radius: 8px 8px 8px 8px;
+    cursor: pointer;
+    margin-top: 5px;
+    padding: 24px;
+    outline: none;
+    display: inline-block;
+    width: 100% !important;
+    color: #fff;
+    background: #000000;
+    border: none;
+    font-family: "ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    -webkit-appearance: none
+}
+
+.dialog-btn-otp:hover, .dialog-btn-otp:focus {
+    background: #FDB819;
+    color: #000;
+}
+
+.dialog-btn-otp:disabled {
+    border-radius: 8px 8px 8px 8px;
+    margin-top: 5px;
+    padding: 24px;
+    outline: none;
+    display: inline-block;
+    width: 100% !important;
+    color: #fff;
+    background: #858080;
+    border: none;
+    font-family: "ProximaNovaLight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    -webkit-appearance: none
 }
 
 .dialog-btn {

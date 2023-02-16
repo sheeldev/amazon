@@ -15,6 +15,12 @@
 		</div>
 	</if>
 
+	<if condition="isset($sheel->show['passwordchange']) AND $sheel->show['passwordchange']=='success'">
+		<div id="system_success" class="status success dialog-status">
+			<p>{_your_account_password_was_changed}</p>
+		</div>
+	</if>
+
 	<noscript class="no-js">{_to_use_site_enable_javascript} <a href="http://www.enable-javascript.com/"
 			target="_blank">{_learn_how_enable_javascript}</a></noscript>
 	<div id="dialog-alternate">
