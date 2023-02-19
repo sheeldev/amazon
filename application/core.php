@@ -79,59 +79,6 @@ $sheel->language = new language($sheel);
 require_once(__DIR__ . '/model/class.styles.inc.php');
 $sheel->styles = new styles($sheel);
 
-$sheel->xml = new xml($sheel);
-
-require_once(__DIR__ . '/model/class.datetimes.inc.php');
-
-
-
-require_once(__DIR__ . '/model/class.currency.inc.php');
-
-$sheel->security = new security();
-$sheel->common = new common($sheel);
-$sheel->currency = new currency($sheel);
-
-require_once(__DIR__ . '/model/class.bbcode.inc.php');
-$sheel->bbcode = new bbcode($sheel);
-
-require_once(__DIR__ . '/model/class.seo.inc.php');
-$sheel->seo = new seo($sheel);
-
-require_once(__DIR__ . '/model/class.hero.inc.php');
-$sheel->hero = new hero($sheel);
-
-require_once(__DIR__ . '/model/class.smtp.inc.php');
-$sheel->smtp = new smtp($sheel);
-
-require_once(__DIR__ . '/model/class.email.inc.php');
-$sheel->email = new email($sheel);
-
-require_once(__DIR__ . '/model/class.user.inc.php');
-$sheel->user = new user($sheel);
-
-require_once(__DIR__ . '/model/class.common_location.inc.php');
-$sheel->common_location = new common_location($sheel);
-
-require_once(__DIR__ . '/model/class.colors.inc.php');
-$sheel->colors = new colors($sheel);
-
-require_once(__DIR__ . '/model/class.attachment.inc.php');
-$sheel->attachment = new attachment($sheel);
-
-require_once(__DIR__ . '/model/class.attachment_tools.inc.php');
-$sheel->attachment_tools = new attachment_tools($sheel);
-
-require_once(__DIR__ . '/model/class.registration.inc.php');
-$sheel->registration = new registration($sheel);
-
-require_once(__DIR__ . '/model/class.code.inc.php');
-$sheel->code = new code($sheel);
-
-require_once(__DIR__ . '/model/class.permissions.inc.php');
-$sheel->permissions = new permissions($sheel);
-
-
-
 
 if (!$sheel->sessions->session_get_key(session_id())) {
     $sheel->sessions->generateToken();	

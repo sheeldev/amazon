@@ -16,13 +16,13 @@ $sheel->template->meta['jsinclude'] = array(
 	)
 );
 $sheel->template->meta['cssinclude'] = array(
-	'common',
 	'vendor' => array(
 		'font-awesome',
 		'glyphicons',
 		'chartist',
 		'growl'
-	)
+	),
+	'common'
 );
 // #### setup default breadcrumb ###############################################
 $sheel->template->meta['navcrumb'] = array($sheel->ilpage['dashboard'] => $sheel->ilcrumbs[$sheel->ilpage['dashboard']]);

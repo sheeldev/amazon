@@ -12,11 +12,10 @@ class admincp_nav extends admincp
     {
         $recentsearches = $this->recent_searches();
         //$ordercount = $this->sheel->ordercount();
-        //$requestcount = $this->sheel->requestcount();
+        $companiescount = $this->sheel->companiescount();
         //$categorycount = $this->sheel->categories->count();
         //$installedapplinks = $this->sheel->admincp_products->fetch_installed_apps();
         $ordercount = '0';
-        $requestcount = '0';
         $categorycount = '0';
         $installedapplinks = '0';
         $html = '<div id="NavDrawer" class="nav-drawer" define="{iLPage: new Sheel.Drawer(this)}">
@@ -93,19 +92,38 @@ class admincp_nav extends admincp
                                         </a>
                                 </li>
                                 <li class="draw-nav__item">
-                                        <a class="draw-nav__link" data-nav-section="requests" bind-event-click="" allow-default="1" data-secondary-nav-id="#iLNav_Requests" aria-controls="iLNav_Requests" href="' . HTTPS_SERVER_ADMIN . 'requests/">
-                                                <span class="glyphicons glyphicons-road draw-icon" aria-hidden="true"></span>
-                                                <span class="draw-nav__text">{_requests}</span>
-                                                ' . (($requestcount > 0) ? '<span class="draw-nav__badge orange draw-nav__badge--adjacent-chevron" id="iLNav_Requests" title="{_requests}" refresh-always="">
-                                                    <span class="draw-nav__badge-content" id="requestcount">' . $this->custom_number_format($requestcount, 1) . '</span>
-                                                </span>' : '<span class="draw-nav__badge green draw-nav__badge--adjacent-chevron" id="iLNav_Requests" title="{_requests}" refresh-always="">
-                                                    <span class="draw-nav__badge-content" id="requestcount">' . $this->custom_number_format($requestcount, 1) . '</span>
+                                <a class="draw-nav__link" data-nav-section="dashboard" bind-event-click="" allow-default="1" data-secondary-nav-id="#iLNav_Dashboard" aria-controls="iLNav_Dashboard" href="' . HTTPS_SERVER_ADMIN . 'dashboard/">
+                                                <span class="glyphicons glyphicons-dashboard draw-icon" aria-hidden="true"></span>
+                                                <span class="draw-nav__text">{_dashboard}</span>
+                                        </a>
+                                </li>
+                                <li class="draw-nav__item">
+                                        <a class="draw-nav__link" data-nav-section="companies" bind-event-click="" allow-default="1" data-secondary-nav-id="#iLNav_Companies" aria-controls="iLNav_Companies" href="' . HTTPS_SERVER_ADMIN . 'companies/">
+                                                <span class="glyphicons glyphicons-bank draw-icon" aria-hidden="true"></span>
+                                                <span class="draw-nav__text">{_companies}</span>
+                                                ' . (($companiescount > 0) ? '<span class="draw-nav__badge sheelColor draw-nav__badge--adjacent-chevron" id="iLNav_Companies" title="{_companies}" refresh-always="">
+                                                    <span class="draw-nav__badge-content" id="companiescount">' . $this->custom_number_format($companiescount, 1) . '</span>
+                                                </span>' : '<span class="draw-nav__badge sheelColor draw-nav__badge--adjacent-chevron" id="iLNav_Companies" title="{_companies}" refresh-always="">
+                                                    <span class="draw-nav__badge-content" id="companiescount">' . $this->custom_number_format($companiescount, 1) . '</span>
                                                 </span>') . '
                                                 <svg class="draw-icon draw-icon--16 draw-nav__chevron draw-icon--no-nudge">
                                                         <use xlink:href="#draw-chevron"></use>
                                                 </svg>
                                         </a>
                                 </li>
+                                <li class="draw-nav__item">
+                                        <a class="draw-nav__link" data-nav-section="users" bind-event-click="" allow-default="1" href="' . HTTPS_SERVER_ADMIN . 'users/">
+                                                <span class="glyphicons glyphicons-user draw-icon" aria-hidden="true"></span>
+                                                <span class="draw-nav__text">{_users}</span>
+                                                <span class="draw-nav__badge sheelColor draw-nav__badge--adjacent-chevron" id="iLNav_Users" title="{users}" refresh-always="">
+                                                    <span class="draw-nav__badge-content" id="usercount">' . $this->custom_number_format($this->sheel->usercount()) . '</span>
+                                                </span>
+                                                <svg class="draw-icon draw-icon--16 draw-nav__chevron draw-icon--no-nudge">
+                                                        <use xlink:href="#draw-chevron"></use>
+                                                </svg>
+                                        </a>
+                                </li>
+                                s
                                 <li class="draw-nav__item">
                                         <a class="draw-nav__link" data-nav-section="orders" bind-event-click="" allow-default="1" data-secondary-nav-id="#iLNav_Orders" aria-controls="iLNav_Orders" href="' . HTTPS_SERVER_ADMIN . 'orders/">
                                                 <span class="glyphicons glyphicons-credit-card draw-icon" aria-hidden="true"></span>
@@ -118,28 +136,9 @@ class admincp_nav extends admincp
                                                 </svg>
                                         </a>
                                 </li>
-s
-                                <!--<li class="draw-nav__item">
-                                        <a class="draw-nav__link" data-nav-section="products" bind-event-click="" allow-default="1" data-secondary-nav-id="#iLNav_Products" aria-controls="iLNav_Products" href="' . HTTPS_SERVER_ADMIN . 'products/">
-                                                <span class="glyphicons glyphicons-tag draw-icon" aria-hidden="true"></span>
-                                                <span class="draw-nav__text">Products</span>
-                                                <svg class="draw-icon draw-icon--16 draw-nav__chevron draw-icon--no-nudge">
-                                                        <use xlink:href="#draw-chevron"></use>
-                                                </svg>
-                                        </a>
-                                </li>-->
-                                <li class="draw-nav__item">
-                                        <a class="draw-nav__link" data-nav-section="customers" bind-event-click="" allow-default="1" href="' . HTTPS_SERVER_ADMIN . 'customers/">
-                                                <span class="glyphicons glyphicons-user draw-icon" aria-hidden="true"></span>
-                                                <span class="draw-nav__text">{_customers}</span>
-                                                <span class="draw-nav__badge draw-nav__badge--adjacent-chevron" id="iLNav_Customers" title="{_customers}" refresh-always="">
-                                                    <span class="draw-nav__badge-content" id="usercount">' . $this->custom_number_format($this->sheel->usercount()) . '</span>
-                                                </span>
-                                                <svg class="draw-icon draw-icon--16 draw-nav__chevron draw-icon--no-nudge">
-                                                        <use xlink:href="#draw-chevron"></use>
-                                                </svg>
-                                        </a>
-                                </li>
+
+                            
+                                
                                 <li class="draw-nav__item">
                                         <a class="draw-nav__link" data-nav-section="accounting" bind-event-click="" allow-default="1" href="' . HTTPS_SERVER_ADMIN . 'accounting/">
                                                 <span class="glyphicons glyphicons-bank draw-icon" aria-hidden="true"></span>
@@ -285,16 +284,16 @@ s
                                 <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="orders_pending" bind-event-click="" allow-default="1" href="orders/checkouts/">Checkouts Pending</a> </li>
                         </ol>
                         <!-- orders subnav -->
-                        <!-- requests subnav -->
-                        <ol class=" draw-nav__list draw-nav__list--secondary" data-nav-section="requests" id="iLNav_Requests">
+                        <!-- companies subnav -->
+                        <ol class=" draw-nav__list draw-nav__list--secondary" data-nav-section="companies" id="iLNav_Companies">
                                 <li class="draw-nav__item draw-nav__item--header">
-                                        <h2 class="draw-heading--callout">Requests</h2>
+                                        <h2 class="draw-heading--callout">Companies</h2>
                                 </li>
-                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="requests_requests" bind-event-click="" allow-default="1" href="requests/">{_requests}</a> </li>
-                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="requests_item" bind-event-click="" allow-default="1" href="requests/?action=additem&view=picked">{_add_item}</a> </li>
-                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="requests_item_upload" bind-event-click="" allow-default="1" href="requests/items/bulk/">{_add_item_via_upload}</a> </li>
+                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="companies_companies" bind-event-click="" allow-default="1" href="companies/">{_companies}</a> </li>
+                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="companies_item" bind-event-click="" allow-default="1" href="companies/?action=additem&view=picked">{_add_item}</a> </li>
+                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="companies_item_upload" bind-event-click="" allow-default="1" href="companies/items/bulk/">{_add_item_via_upload}</a> </li>
                         </ol>
-                        <!-- requests subnav -->
+                        <!-- companies subnav -->
                         <!-- products subnav -->
                         <ol class=" draw-nav__list draw-nav__list--secondary" data-nav-section="products" id="iLNav_Products">
                                 <li class="draw-nav__item draw-nav__item--header">

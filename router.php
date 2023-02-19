@@ -39,6 +39,17 @@ $router->map('GET|POST', '/admin/', __DIR__ . '/application/web/admin/home.php',
 $router->map('GET|POST', '/admin/signin/', __DIR__ . '/application/web/admin/login.php', 'admin_login');
 $router->map('GET|POST', '/admin/signin/[renew-password:cmd]/', __DIR__ . '/application/web/admin/login.php', 'admin_login_renew');
 $router->map('GET|POST', '/admin/signin/[*:cmd]/', __DIR__ . '/application/web/admin/login.php', 'admin_logout');
+$router->map('GET|POST', '/admin/companies/', __DIR__ . '/application/web/admin/companies.php', 'admin_companies');
+$router->map('GET|POST', '/admin/companies/[view:cmd]/[*:rid]/', __DIR__ . '/application/web/admin/companies.php', 'admin_companies_view');
+$router->map('GET|POST', '/admin/companies/[add:cmd]/', __DIR__ . '/application/web/admin/companies.php', 'admin_companies_add');
+$router->map('GET|POST', '/admin/companies/[update:cmd]/[*:rid]/[*:view]/', __DIR__ . '/application/web/admin/companies.php', 'admin_update_companies_view');
+$router->map('GET|POST', '/admin/companies/items/', __DIR__ . '/application/web/admin/companies-items.php', 'admin_companies_items');
+$router->map('GET|POST', '/admin/companies/items/[add:cmd]/[*:requestid]/', __DIR__ . '/application/web/admin/companies-items.php', 'admin_companies_items_add');
+$router->map('GET|POST', '/admin/companies/items/[update:cmd]/[*:requestid]/', __DIR__ . '/application/web/admin/companies-items.php', 'admin_companies_items_edit');
+$router->map('GET|POST', '/admin/companies/items/[dosave:cmd]/[*:requestid]/', __DIR__ . '/application/web/admin/companies-items.php', 'admin_companies_items_save');
+$router->map('GET|POST', '/admin/companies/items/[doupdate:cmd]/[*:requestid]/', __DIR__ . '/application/web/admin/companies-items.php', 'admin_companies_items_update');
+$router->map('GET|POST', '/admin/companies/items/[view:cmd]/[*:requestid]/', __DIR__ . '/application/web/admin/companies-items.php', 'admin_companies_items_view');
+$router->map('GET|POST', '/admin/companies/items/[bulk:cmd]/', __DIR__ . '/application/web/admin/companies-items.php', 'admin_companies_items_bulk');
 
 
 if (file_exists(__DIR__ . '/router_custom.php'))
@@ -67,14 +78,14 @@ if (($match AND is_callable($match['target'])) OR ($match AND stristr($match['ta
 }
 else
 { // run classes as required
-	$controller = $action = '';
+	$web = $action = '';
 	if (isset($match['target']))
 	{
-		list($controller, $action) = explode('#', $match['target']);
+		list($web, $action) = explode('#', $match['target']);
 	}
-	if (is_callable(array($controller, $action)))
+	if (is_callable(array($web, $action)))
 	{
-		$obj = new $controller();
+		$obj = new $web();
 		call_user_func_array(array($obj, $action), array($match['params']));
 	}
 	else if ($match['target'] == '')
@@ -130,7 +141,7 @@ a:visited  { font: 8pt/11pt verdana, arial, sans-serif; color: #4e4e4e; }
 	}
 	else
 	{
-		echo 'Error: can not call ' . $controller . '#' . $action;
+		echo 'Error: can not call ' . $web . '#' . $action;
 	}
 }
 
