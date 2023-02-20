@@ -11,7 +11,7 @@
                     {_companies}
               	</h1>
               	<div class="header__primary-actions"> 
-                   <a class="btn btn-primary" href="{https_server_admin}companies/add/">{_add_request}</a>    
+                   <a class="btn btn-primary" href="{https_server_admin}companies/add/">{_add_company}</a>    
                 </div>
                 <div class="header__primary-actions"> 
                     {prevnext}
@@ -33,10 +33,10 @@
                         <div>
                             <ul class="draw-tab__list" role="tablist">
                                 <li role="presentation"><a class="draw-tab<if condition="!isset($sheel->GPC['view'])"> draw-tab--is-active</if>" tabindex="0" aria-controls="NextTabPanel1" aria-selected="true" href="companies/">{_active}<if condition="empty($sheel->GPC['view'])"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
-                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'banned'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel3" aria-selected="false" href="companies/?view=banned<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_banned} <if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'dispatched'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
-                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'cancelled'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel4" aria-selected="false" href="companies/?view=cancelled<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_cancelled}<if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'picked'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
-                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'suspended'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel4" aria-selected="false" href="companies/?view=suspended<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_suspended}<if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'pending'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
-                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'moderated'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel2" aria-selected="false" href="companies/?view=moderated<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_moderated}<if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'accepted'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
+                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'banned'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel3" aria-selected="false" href="companies/?view=banned<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_banned} <if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'banned'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
+                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'cancelled'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel4" aria-selected="false" href="companies/?view=cancelled<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_cancelled}<if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'cancelled'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
+                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'suspended'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel4" aria-selected="false" href="companies/?view=suspended<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_suspended}<if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'suspended'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
+                                <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'moderated'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel2" aria-selected="false" href="companies/?view=moderated<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_moderated}<if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'moderated'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
                                 <li role="presentation"><a class="draw-tab<if condition="isset($sheel->GPC['view']) AND $sheel->GPC['view'] == 'deleted'"> draw-tab--is-active</if>" tabindex="-1" aria-controls="NextTabPanel6" aria-selected="false" href="companies/?view=deleted<if condition="isset($sheel->GPC['filter']) AND !empty($sheel->GPC['filter']) AND isset($sheel->GPC['q']) AND !empty($sheel->GPC['q'])">&amp;filter={form[filter]}&amp;q={form[q]}</if>">{_deleted}<if condition="!empty($sheel->GPC['view']) AND $sheel->GPC['view'] == 'deleted'"> &nbsp;<span class="cbadge lineitems cbadge-notification">{form[number]}</span></if></a></li>
                                    <li class="draw-tab__list__disclosure-item dropdown-container"><span class="draw-tab draw-tab--disclosure" tabindex="-1" data-dropdown="~ .dropdown" aria-selected="true"><i class="ico ico-16-svg ico-chevron-down-blue"></i></span>
                                     <div class="dropdown">
@@ -134,18 +134,18 @@
                                                     </span>
                                                 </div>
                                                 </span></th>
-                                                <th class="request is-sortable " > <span>{_id}</span> </th>
-                                                <th class="customer is-sortable "> <span>{_account}</span> </th>
+                                                <th class="is-sortable " > <span>{_id}</span> </th>
+                                                <th class="is-sortable "> <span>{_account}</span> </th>
                                                 <th class="customer is-sortable "> <span>{_name}</span> </th>
-                                                <th class="customer is-sortable "> <span>{_description}</span> </th>
-                                                <th class="customer is-sortable "> <span>{_city}</span> </th>
+                                                <th class="customer"> <span>{_description}</span> </th>
+                                                <th><span>{_city}</span> </th>
                                                 <th class="customer is-sortable "> <span>{_country}</span> </th>
-                                                <th class="customer is-sortable "> <span>{_email}</span> </th>
-                                                <th class="customer is-sortable "> <span>{_phone}</span> </th>
-                                                <th class="customer is-sortable "> <span>{_available_balance}</span> </th>
-                                                <th class="customer is-sortable "> <span>{_total_balance}</span> </th>
-                                                <th class="date is-sortable sorted-desc"> <span>{_subscription}</span> </th>
-                                                <th class="orders tc is-sortable" nowrap="nowrap">{_items}</span></th>
+                                                <th> <span>{_email}</span> </th>
+                                                <th> <span>{_phone}</span> </th>
+                                                <th> <span>{_available_balance}</span> </th>
+                                                <th> <span>{_total_balance}</span> </th>
+                                                <th class="is-sortable"> <span>{_subscription}</span> </th>
+                                                <th>{_items}</span></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -155,17 +155,17 @@
                                 <td class="no-wrap"><a href="companies/view/{request_id}/?view={fview}">{company_id}</a></td>
                                 <td class="no-wrap">{account_number}</td>
                                 <td class="date draw-table__cell--full-width-when-condensed type--subdued"> <span>{companyname}</span></td>
-                                <td class="status no-wrap type--subdued">{companydescription}</td>
+                                <td class="status type--subdued">{companydescription}</td>
                                 <td class="status no-wrap">{city}</td>
                                 <td class="status no-wrap type--subdued">{countrycode}</td>
                                 <td class="status no-wrap">{email}</td>
                                 <td class="status no-wrap">{phone}</td>
                                 <td class="status no-wrap">{available_balance}</td>
                                 <td class="status no-wrap">{total_balance}</td>
-                                <td class="status no-wrap">{subscriptionid}</td>
-                                <if condition="isset($sheel->GPC['view']) AND ($sheel->GPC['view'] == 'active') "><td class="last_order tc type--subdued">{switchadd}<br><br>{switchview}</td>
+                                <td class="status no-wrap">{title_eng}</td>
+                                <if condition="isset($sheel->GPC['view']) AND ($sheel->GPC['view'] == 'active') "><td class="last_order type--subdued">{switchadd}{switchview}</td>
                                 <else />
-                                <td class="last_order tc type--subdued">{switchview}</td>
+                                <td class="last_order type--subdued">{switchview}</td>
                                 </if>
                             </tr>
                             </loop name="companies">
@@ -199,21 +199,21 @@
 <if condition="isset($sheel->GPC['error']) AND $sheel->GPC['error'] ==  'wan'"><script>jQuery.growl.error({ title: '{_wrong_account}', message: '{_wrong_account_number}' })</script></if>
 
 <div id="companies-new" class="page">
-        <form autocomplete="off" class="address-form" id="new_request" action="{https_server_admin}companies/<if condition="$sheel->GPC['cmd'] == 'add'">add</if>/" accept-charset="UTF-8" onsubmit="return verify_acp_request('<if condition="$sheel->GPC['cmd'] == 'add'">add<else />update</if>')" method="post">
+        <form autocomplete="off" id="new_company" action="{https_server_admin}companies/<if condition="$sheel->GPC['cmd'] == 'add'">add</if>/" accept-charset="UTF-8" onsubmit="return verify_acp_company('<if condition="$sheel->GPC['cmd'] == 'add'">add<else />update</if>')" method="post">
     	<input type="hidden" name="do" value="save" />
     	<input type="hidden" name="form[pid]" id="pid" value="{form[pid]}">
         <div class="header-row">
             <header class="header">
                 <h1 class="header__main">
-                    <span class="glyphicons glyphicons-user draw-icon" aria-hidden="true"></span>
-                    <span class="breadcrumb"><a href="{https_server_admin}customers/">{_companies}</a> / </span>
-                        <if condition="$sheel->GPC['cmd'] == 'add'">{_add_request}<else />{_update}</if>
+                    <span class="glyphicons glyphicons-bank draw-icon" aria-hidden="true"></span>
+                    <span class="breadcrumb"><a href="{https_server_admin}companies/">{_companies}</a> / </span>
+                        <if condition="$sheel->GPC['cmd'] == 'add'">{_add_company}<else />{_update}</if>
                 </h1>
                 <div class="header__primary-actions">
                     <button type="submit" class="btn js-btn-primary js-btn-loadable has-loading btn-primary">{_save}</button>
                 </div>
                 
-                <div class="header__secondary-actions">  <a class="btn" href="{https_server_admin}companies/add/">{_add_request}</a> <a class="btn" href="{https_server_admin}companies/">{_cancel}</a> </div>
+                <div class="header__secondary-actions">  <a class="btn" href="{https_server_admin}companies/add/">{_add_company}</a> <a class="btn" href="{https_server_admin}companies/">{_cancel}</a> </div>
             </header>
         </div>
             
@@ -221,31 +221,20 @@
             <div class="layout-content">
                     <div class="layout-content__sidebar layout-content__first">
                         <div class="section-summary">
-                            <h1>Request Details</h1>
-                            <p>Some details about this request.</p>
+                            <h1>Company Details</h1>
+                            <p>Some details about this Company.</p>
                         </div>
                     </div>
                     <div class="layout-content__main">
                         <div class="draw-card">
                             <div class="draw-card__section">
-                            	{apihook[admincp_companies_create_custom_fields1]}
-                            	<div class="draw-grid draw-grid--no-outside-padding draw-grid--inner-grid">
-                            		<div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-		                            		<label class="draw-label" for="vehicle_registration_category">{_parent_category}</label>
-				                            <div><iframe name="category_iframe" id="category_iframe" width="100%" scrolling-bottom="yes" border="0" frameborder="0" class="" style="height:240px" src="{ajaxurl}?do=categories&mode=product&cid={form[cid]}&pid={form[pid]}&showyouselectedstring=0&showcontinue=0&showthumb=0&showcidbox=0&showcheckmarkafterstring=0&copysefurls=0"></iframe></div>
-				                            <div style="display:none"><span class="right st">{_category_number}: <input type="text" id="cid" name="form[cid]" size="6" /></span></div>
-				                            <div style="display:none"><div id="categorybutton"></div></div>
-				                            <div class="st"><strong>{_youve_selected}:</strong> <span id="selectedcategory" class="blue"></span><span id="cidstringcb"></span></div>
-		                    			</div>
-		                    		</div>
-                            	</div>
+                            	
                             	<div class="draw-grid draw-grid--no-outside-padding draw-grid--inner-grid">
                                     <div class="draw-grid__cell">
                                         <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="request_store">{_store}</label>
-                                            <div class="draw-select__wrapper draw-input--has-content" id="store-wrapper">
-                                            	{form[adminstores]}
+                                            <label class="draw-label" for="company_subscription">{_subscription}</label>
+                                            <div class="draw-select__wrapper draw-input--has-content" id="subscription-wrapper">
+                                            	{form[subscriptions]}
                                         	</div>
                                         </div>
                                     </div>
@@ -253,115 +242,91 @@
                             	<div class="draw-grid draw-grid--no-outside-padding draw-grid--inner-grid">
                                     <div class="draw-grid__cell">
                                         <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="vehicle_registration">{_vehicle_registration}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[vehicleregistration]" id="vehicle_registration" value="{form[vehicleregistration]}">
-                                            <if condition="$sheel->GPC['cmd'] == 'update'"><input type="hidden" name="form[oldvehicleregistration]" value="{form[vehicleregistration]}" id="oldvehicleregistration" /></if>
+                                            <label class="draw-label" for="companyaccount">{_account_number}</label>
+                                            <input class="draw-input" size="30" type="text" name="form[companyaccount]" id="companyaccount" value="{form[companyaccount]}">
+                                            <if condition="$sheel->GPC['cmd'] == 'update'"><input type="hidden" name="form[oldcompanyaccount]" value="{form[companyaccount]}" id="oldcompanyaccount" /></if>
                                         </div>
                                     </div>
                                     <div class="draw-grid__cell">
                                         <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="vehicle_number">{_vehicle_c_number}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[vehiclenumber]" id="vehicle_number" value="{form[vehiclenumber]}">
+                                            <label class="draw-label" for="companyname">{_name}</label>
+                                            <input class="draw-input" size="30" type="text" name="form[companyname]" id="companyname" value="{form[companyname]}">
+                                            <if condition="$sheel->GPC['cmd'] == 'update'"><input type="hidden" name="form[oldcompanyname]" value="{form[companyname]}" id="oldcompanyname" /></if>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="draw-grid draw-grid--no-outside-padding draw-grid--inner-grid">
+                                    
+
+                                    
+                                    <div class="draw-grid__cell">
+                                        <div class="draw-input-wrapper">
+                                            <label class="draw-label" for="companyreg">{_company_registration_number}</label>
+                                            <input class="draw-input" size="30" type="text" name="form[companyreg]" id="companyreg" value="{form[companyreg]}">
+                                        </div>
+                                    </div>
+                                    <div class="draw-grid__cell">
+                                        <div class="draw-input-wrapper">
+                                            <label class="draw-label" for="companyvat">{_vat_registration_number}</label>
+                                            <input class="draw-input" size="100" type="text" name="form[companyreg]" id="companyreg" value="{form[companyreg]}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="draw-grid draw-grid--no-outside-padding draw-grid--inner-grid">
                                     <div class="draw-grid__cell">
                                         <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="vehicle_make">{_vehicle_make}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[vehiclemake]" id="vehicle_make" value="{form[vehiclemake]}">
-                                        </div>
-                                    </div>
-                                    <div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="vehicle_model">{_vehicle_model}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[vehiclemodel]" id="vehicle_model" value="{form[vehiclemodel]}">
+                                            <label class="draw-label" for="companyabout">{_about}</label>
+                                            <input class="draw-input" size="30" type="text" name="form[companyabout]" id="companyabout" value="{form[companyabout]}">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="draw-grid draw-grid--no-outside-padding draw-grid--inner-grid">
-                                 <div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-											<label class="draw-label" for="vehicle_year">{_vehicle_year}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[vehicleyear]" id="vehicle_year"  value="{form[vehicleyear]}">
-                                        </div>
-                                    </div>
                                     <div class="draw-grid__cell">
                                         <div class="draw-input-wrapper">
-											<label class="draw-label" for="request_date">{_request_date} <span class="type--subdued">(YYYY-MM-DD)</span></label>
-                                            <input class="draw-input" size="30" type="text" name="form[requestdate]" id="request_date" placeholder="YYYY-MM-DD" value="{form[requestdate]}">
+                                            <label class="draw-label" for="companydescription">{_description}</label>
+                                            <input class="draw-input" size="100" type="text" name="form[companydescription]" id="companydescription" value="{form[companydescription]}">
                                         </div>
                                     </div>
-                                   
                                 </div>
                                 
                                 <div class="draw-grid draw-grid--no-outside-padding draw-grid--inner-grid">
-                                 <div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-											<label class="draw-label" for="vehicle_value">{_value}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[vehiclevalue]" id="vehicle_value"  value="{form[vehiclevalue]}">
-                                        </div>
-                                    </div>
-                                    <div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="value_currency">{_currency}</label>
-                                            <div class="draw-select__wrapper draw-input--has-content" id="currency-wrapper">
-                                            	{form[valuecurrency]}
-                                        	</div>
-                                        </div>
-                                    </div>
-                                   
                                 </div>
-                               
-                                <div class="draw-grid draw-grid--no-outside-padding">
-                                    <div class="draw-grid__cell">
-                                       <div class="draw-input-wrapper">
-											<label class="draw-label" for="user_account">{_account_number}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[useraccount]" id="user_account" value="{form[useraccount]}">
-                                        </div>
-                                    </div>
-                                </div>
+
+                    
+  
                                  <div class="draw-grid draw-grid--no-outside-padding">
                                     <div class="draw-grid__cell">
                                         <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="request_status">{_status}</label>
+                                            <label class="draw-label" for="companystatus">{_status}</label>
                                             <div class="draw-select__wrapper draw-input--has-content" id="status-wrapper">
-                                            	{form[companiestatus]}
+                                            	{form[companystatus]}
+                                        	</div>
+                                        </div>
+                                    </div>
+                                    <div class="draw-grid__cell">
+                                        <div class="draw-input-wrapper">
+                                            <label class="draw-label" for="currency">{_currency}</label>
+                                            <div class="draw-select__wrapper draw-input--has-content" id="status-wrapper">
+                                            	{form[currency]}
+                                        	</div>
+                                        </div>
+                                    </div>
+                                    <div class="draw-grid__cell">
+                                        <div class="draw-input-wrapper">
+                                            <label class="draw-label" for="tz">{_timezone}</label>
+                                            <div class="draw-select__wrapper draw-input--has-content" id="status-wrapper">
+                                            	{form[tz]}
                                         	</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="draw-grid draw-grid--no-outside-padding">
-                                    <div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="vehicle_condition">{_condition}</label>
-                                            <div class="draw-select__wrapper draw-input--has-content" id="status-wrapper">
-                                            	{form[requestcondition]}
-                                        	</div>
-                                        </div>
-                                    </div>
-                                    <div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="used_for">{_used_for}</label>
-                                            <input class="draw-input" size="30" type="text" name="form[usedfor]" id="usedfor" value="{form[useraccount]}">
-                                        </div>
-                                    </div>
-                                    <div class="draw-grid__cell">
-                                        <div class="draw-input-wrapper">
-                                            <label class="draw-label" for="used_for_unit">{_unit}</label>
-                                            <div class="draw-select__wrapper draw-input--has-content" id="status-wrapper">
-                                            	{form[requestusedunit]}
-                                        	</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                {apihook[admincp_companies_create_custom_fields2]}
+
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="section address">
                 <div class="layout-content">
                     <div class="layout-content__sidebar layout-content__first">
@@ -394,20 +359,9 @@
                 </div>
             </div>
 
-            
-            
-            
-            <!--<div class="section section--no-border">
-                <div class="draw-grid draw-grid--right-aligned">
-                    <div class="draw-grid__cell draw-grid__cell--no-flex"> <a class="btn" href="{https_server_admin}customers/">{_cancel}</a>
-                        <button name="button" type="submit" class="btn btn-primary js-btn-primary js-btn-loadable has-loading">{_save}</button>
-                    </div>
-                </div>
-            </div>-->
+
            
-        </form>
-		
-        <!-- customer overview -->
+            </form>
        	</div>
 <div define="iLNav.setPage(['companies','companies_companies']), iLPage.close()"></div>
 <else />
@@ -546,13 +500,10 @@
                                           <th class="is-sortable "> <span>{_account}</span> </th>
                                           <th class="customer is-sortable "> <span>{_name}</span> </th>
                                           <th class="customer"> <span>{_description}</span> </th>
-                                          <th><span>{_city}</span> </th>
-                                          <th class="customer is-sortable "> <span>{_country}</span> </th>
-                                          <th> <span>{_email}</span> </th>
-                                          <th> <span>{_phone}</span> </th>
                                           <th> <span>{_available_balance}</span> </th>
                                           <th> <span>{_total_balance}</span> </th>
                                           <th class="is-sortable"> <span>{_subscription}</span> </th>
+                                          <th> <span>{_profiles}</span> </th>
                                           <th>{_items}</span></th>
                         </tr>
                         </thead>
@@ -564,13 +515,10 @@
                                 <td class="no-wrap">{account_number}</td>
                                 <td class="date draw-table__cell--full-width-when-condensed type--subdued"> <span>{companyname}</span></td>
                                 <td class="status type--subdued">{companydescription}</td>
-                                <td class="status no-wrap">{city}</td>
-                                <td class="status no-wrap type--subdued">{countrycode}</td>
-                                <td class="status no-wrap">{email}</td>
-                                <td class="status no-wrap">{phone}</td>
                                 <td class="status no-wrap">{available_balance}</td>
                                 <td class="status no-wrap">{total_balance}</td>
-                                <td class="status no-wrap">{subscriptionid}</td>
+                                <td class="status no-wrap">{title_eng}</td>
+                                <td class="status no-wrap">{profilesview}</td>
                                 <td class="last_order type--subdued">{switchadd}{switchview}</td>
                                 
                             </tr>

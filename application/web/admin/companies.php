@@ -136,12 +136,7 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
     else if (isset($sheel->GPC['cmd']) AND $sheel->GPC['cmd'] == 'add')
     {
         if (isset($sheel->GPC['do']) AND $sheel->GPC['do'] == 'save') {
-            
-//             if ($sheel->categories->can_post($_SESSION['sheeldata']['user']['slng'], 'product', $sheel->GPC['cid']) == false)
-//             {
-//                 $sheel->print_notice('{_this_is_a_nonposting_category}', '{_please_choose_another_category_to_list_your_auction_under_this_category_is_currently_reserved_for_postable_subcategories_and_does_not_allow_any_auction_postings}', 'javascript:history.back(1);', '{_back}');
-//                 exit();
-//             }
+            die('test');
             $customerid= $sheel->admincp_users->get_user_id($sheel->GPC['form'][useraccount]);
             if ($customerid > 0) {
                 
@@ -181,37 +176,33 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
         
         
         $form = array();
-        if (empty($_SESSION['sheeldata']['tmp']['new_project_id']) OR !isset($_SESSION['sheeldata']['tmp']['new_project_id']))
-        {
-            $project_id = $sheel->auction_rfp->construct_new_auctionid();
-            $_SESSION['sheeldata']['tmp']['new_project_id'] = $project_id;
-        }
-        else
-        {
-            $project_id = $_SESSION['sheeldata']['tmp']['new_project_id'];
-        }
-        $sheel->template->meta['areatitle'] = 'Admin CP | Requests - Add';
-        $sheel->template->meta['pagetitle'] = SITE_NAME . ' - Admin CP | Requests - Add';
+        $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+        $sheel->template->meta['areatitle'] = 'Admin CP | Companies - Add';
+        $sheel->template->meta['pagetitle'] = SITE_NAME . ' - Admin CP | Companies - Add';
         
-        $form['vehicleregistration'] = '';
-        $form['cid'] = '';
-        $form['vehiclenumber'] = '';
-        $form['vehiclemake'] = '';
-        $form['vehiclemodel'] = '';
-        $form['requestdate'] = '';
-        $form['vehicleyear'] = '';
-        $form['vehiclevalue'] = '';
-        $form['adminstores'] = $sheel->stores->pulldown('draw-select', 'form[store]', 'storeid', '');
-        $form['valuecurrency'] = $sheel->currency->pulldown('', '', 'draw-select', 'form[currency]', 'currencyid', '');
-        $form['useraccount'] = '';
-        $requeststatuses = array('registered' => '{_registered}', 'read' => '{_ready}', 'accepted' => '{_accepted}', 'dispatched' => '{_dispatched}', 'picked' => '{_picked}', 'closed' => '{_closed}');
-        $form['requeststatus'] = $sheel->construct_pulldown('status', 'form[status]', $requeststatuses, '', 'class="draw-select"');
-        $requestconditions = array('bad' => '{_bad}', 'fair' => '{_fair}', 'good' => '{_good}', 'verygood' => '{_very_good}', 'excellent' => '{_excellent}');
-        $form['requestcondition'] = $sheel->construct_pulldown('condition', 'form[condition]', $requestconditions, '', 'class="draw-select"');
-        $form['pid'] = $project_id;
-        $form['usedfor'] = '';
-        $requestusedunits = array('km' => '{_km}', 'hour' => '{_hour}');
-        $form['requestusedunit'] = $sheel->construct_pulldown('usedunit', 'form[usedunit]', $requestusedunits, '', 'class="draw-select"');
+        $form['companyname'] = '';
+        $form['companyabout'] = '';
+        $form['companydescription'] = '';
+        $form['companyemail'] = '';
+        $form['companyphone'] = '';
+
+        $form['companyaccount'] = '';
+        $form['companyvat'] = '';
+        $form['companyreg'] = '';
+
+        $form['companyaddress1'] = '';
+        $form['companyaddress2'] = '';
+        $form['companycity'] = '';
+        $form['companystate'] = '';
+        $form['companyzip'] = '';
+        $form['companycountry'] = $sheel->common_location->construct_country_pulldown('', '', 'draw-select', 'form[companycountry]', 'locationid', '');
+        $form['subscriptions'] = $sheel->subscription->pulldown();
+        $form['currency'] = $sheel->currency->pulldown('', '', 'draw-select', 'form[currency]', 'currencyid', '');
+
+        $companystatuses = array('active' => '{_active}', 'banned' => '{_banned}', 'moderated' => '{_moderated}', 'cancelled' => '{_cancelled}', 'suspended' => '{_suspended}');
+        $form['companystatus'] = $sheel->construct_pulldown('status', 'form[companystatus]', $companystatuses, '', 'class="draw-select"');
+        $form['tz'] = $sheel->construct_pulldown('tz', 'form[tz]', $tzlist, '', 'class="draw-select"');
+        
         
     }
     
@@ -296,6 +287,7 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
                 $ids = explode("~", $_COOKIE[COOKIE_PREFIX . 'inline' . $sheel->GPC['checkboxid']]);
                 $response = array();
                 $response = $sheel->admincp_companies->changestatus($ids,'active');
+                
                 unset($ids);
                 $sheel->template->templateregistry['success'] = $response['success'];
                 $sheel->template->templateregistry['errors'] = $response['errors'];
@@ -439,8 +431,9 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
                 // $res['lineitems'] = $sheel->admincp->fetch_line_items($res['orderidpublic']);
                 // $res['pictures'] = $sheel->buynow->fetch_line_item_pictures($res['orderidpublic']);
                 $res['countrycode'] = $sheel->common_location->print_country_name($res['country']);
-                $res['switchadd'] = '<span class="badge badge--info title="{_add_item}"><a href="' . HTTPS_SERVER_ADMIN .'companies/items/add/' . $res['request_id'] . '/?view='.$fview.'&rid=' . $res['request_id'] . '&cid='.$res['cid'].'&sid='.$res['storeid'].'&uid='.$res['customer_id'].'" data-no-turbolink>{_add}</a></span>';
-                $res['switchview'] = '<span class="badge badge--success" title="{_add_item}"><a href="' . HTTPS_SERVER_ADMIN .'companies/items/view/' . $res['request_id'] . '/?view='.$fview.'&rid=' . $res['request_id'] . '&cid='.$res['cid'].'&sid='.$res['storeid'].'&uid='.$res['customer_id'].'" data-no-turbolink>{_view}</a></span>';
+                $res['switchadd'] = '<span class="badge badge--info title="{_add_item}"><a href="' . HTTPS_SERVER_ADMIN .'companies/items/add/' . $res['company_id'] . '/?view='.$fview.'&company_id=' . $res['company_id'] .'" data-no-turbolink>{_add}</a></span>';
+                $res['switchview'] = '<span class="badge badge--success" title="{_view_item}"><a href="' . HTTPS_SERVER_ADMIN .'companies/items/view/' . $res['company_id'] . '/?view='.$fview.'&company_id=' . $res['company_id'] .'" data-no-turbolink>{_view}</a></span>';
+                $res['profilesview'] = '<span class="badge badge--success" title="{_view_profiles}"><a href="' . HTTPS_SERVER_ADMIN .'companies/profiles/view/' . $res['company_id'] . '/?view='.$fview.'&company_id=' . $res['company_id'].'" data-no-turbolink>{_view}</a></span>';
                 
                 $companies[] = $res;
             }

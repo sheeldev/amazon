@@ -1,6 +1,6 @@
 <?php
 
-class admincp_companie extends admincp
+class admincp_companies extends admincp
 {
     /**
      * Function to delete single or multiple companies 
@@ -15,23 +15,23 @@ class admincp_companie extends admincp
         $allerrors = $successids = $failedids = $action = $display =  '';
         $count = 0;
         if ($status == 'deleted') {
-            $action = '{_deleted_by_staff}';
+            $action = '{_deleted}';
             $display = '{_deleted}';
 
         } else if ($status == 'suspended') {
-            $action = '{_suspended_by_staff}';
+            $action = '{_suspended}';
             $display = '{_suspended}';
 
         } else if ($status == 'canceled') {
-            $action = '{_canceled_by_staff}';
+            $action = '{_canceled}';
             $display = '{_canceled}';
 
         } else if ($status == 'banned') {
-            $action = '{_banned_by_staff}';
+            $action = '{_banned}';
             $display = '{_banned}';
 
         } else if ($status == 'active') {
-            $action = '{_active_by_staff}';
+            $action = '{_active}';
             $display = '{_active}';
 
         } 
@@ -61,10 +61,9 @@ class admincp_companie extends admincp
     function dostatuschange($companyid = '', $action = '', $sendemail = true, $status)
     {
         $sql = $this->sheel->db->query("
-			SELECT company_id
+			SELECT company_id, companyname
 			FROM " . DB_PREFIX . "companies
 				WHERE company_id = '" . $companyid . "'
-				AND status in ('active')
 			LIMIT 1
 		");
         if ($this->sheel->db->num_rows($sql) > 0) {
@@ -72,7 +71,7 @@ class admincp_companie extends admincp
 
             $this->sheel->db->query("
 					UPDATE " . DB_PREFIX . "companies
-					SET status = '.$status.'
+					SET status = '". $status ."'
 					WHERE company_id = '" . $this->sheel->db->escape_string($companyid) . "'
 				");
             $sql2 = $this->sheel->db->query("
@@ -85,7 +84,7 @@ class admincp_companie extends admincp
                 while ($customer = $this->sheel->db->fetch_array($sql2, DB_ASSOC)) {
                     $existing = array(
                         '{{customer}}' => $customer['username'],
-                        '{{oid}}' => $companyid,
+                        '{{oid}}' => $res['companyname'],
                         '{{reason}}' => $action
                     );
                     $this->sheel->email->mail = $customer['email'];

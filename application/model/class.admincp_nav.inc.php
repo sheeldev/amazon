@@ -290,7 +290,7 @@ class admincp_nav extends admincp
                                         <h2 class="draw-heading--callout">Companies</h2>
                                 </li>
                                 <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="companies_companies" bind-event-click="" allow-default="1" href="companies/">{_companies}</a> </li>
-                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="companies_item" bind-event-click="" allow-default="1" href="companies/?action=additem&view=picked">{_add_item}</a> </li>
+                                <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="companies_item" bind-event-click="" allow-default="1" href="companies/">{_add_item}</a> </li>
                                 <li class="draw-nav__item"> <a class="draw-nav__link" data-nav-sub-item="companies_item_upload" bind-event-click="" allow-default="1" href="companies/items/bulk/">{_add_item_via_upload}</a> </li>
                         </ol>
                         <!-- companies subnav -->

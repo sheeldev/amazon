@@ -414,14 +414,14 @@ class subscription
         function pulldown()
         {
                 $slng = isset($_SESSION['sheeldata']['user']['slng']) ? $_SESSION['sheeldata']['user']['slng'] : 'eng';
-                $html = '<div class="draw-select__wrapper w-355"><select name="subscriptionid" class="draw-select"><optgroup label="{_please_select}">';
+                $html = '<div class="draw-select__wrapper w-355"><select name="subscriptionid" id="subscriptionid" class="draw-select"><optgroup label="{_all_subscriptions}">';
                 $sql = $this->sheel->db->query("
                         SELECT subscriptionid, title_" . $slng . " AS title
                         FROM " . DB_PREFIX . "subscription
                         WHERE type = 'product'
                 ", 0, null, __FILE__, __LINE__);
                 if ($this->sheel->db->num_rows($sql) > 0) {
-                        $html .= '<option value="0">{_all_subscribers}</option><option value="" disabled="disabled">-----------------------------------</option>';
+                        $html .= '<option value="0">{_please_select}</option>';
                         while ($res = $this->sheel->db->fetch_array($sql, DB_ASSOC)) {
                                 $html .= '<option value="' . $res['subscriptionid'] . '">' . stripslashes(o($res['title'])) . '</option>';
                         }
