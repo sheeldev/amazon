@@ -167,7 +167,7 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
             if ($newrequestid > 0)
             {
                 $sheel->attachment->update_request_attachments($sheel->GPC['form']['pid'],$newrequestid);
-                unset($_SESSION['sheeldata']['tmp']['new_project_id']);
+                unset($_SESSION['sheeldata']['tmp']['new_company_ref']);
                 refresh(HTTPS_SERVER_ADMIN . 'requests/');
                 exit();
             }
@@ -177,18 +177,33 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
         
         $form = array();
         $tzlist = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
+        $company_ref = $sheel->company->construct_new_ref();
+        if (empty($_SESSION['sheeldata']['tmp']['new_company_ref']) OR !isset($_SESSION['sheeldata']['tmp']['new_company_ref']))
+        {
+            $company_ref = $sheel->company->construct_new_ref();
+            $_SESSION['sheeldata']['tmp']['new_company_ref'] = $company_ref;
+        }
+        else
+        {
+            $company_ref = $_SESSION['sheeldata']['tmp']['new_company_ref'];
+        }
+
+        
         $sheel->template->meta['areatitle'] = 'Admin CP | Companies - Add';
         $sheel->template->meta['pagetitle'] = SITE_NAME . ' - Admin CP | Companies - Add';
         
         $form['companyname'] = '';
         $form['companyabout'] = '';
         $form['companydescription'] = '';
-        $form['companyemail'] = '';
-        $form['companyphone'] = '';
-
         $form['companyaccount'] = '';
         $form['companyvat'] = '';
         $form['companyreg'] = '';
+        $form['subscriptions'] = $sheel->subscription->pulldown();
+        $form['currency'] = $sheel->currency->pulldown('', '', 'draw-select', 'form[currency]', 'currencyid', '');
+        $companystatuses = array('active' => '{_active}', 'banned' => '{_banned}', 'moderated' => '{_moderated}', 'cancelled' => '{_cancelled}', 'suspended' => '{_suspended}');
+        $form['companystatus'] = $sheel->construct_pulldown('status', 'form[companystatus]', $companystatuses, '', 'class="draw-select"');
+        $form['tz'] = $sheel->construct_pulldown('tz', 'form[tz]', $tzlist, '', 'class="draw-select"');
+
 
         $form['companyaddress1'] = '';
         $form['companyaddress2'] = '';
@@ -196,12 +211,12 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
         $form['companystate'] = '';
         $form['companyzip'] = '';
         $form['companycountry'] = $sheel->common_location->construct_country_pulldown('', '', 'draw-select', 'form[companycountry]', 'locationid', '');
-        $form['subscriptions'] = $sheel->subscription->pulldown();
-        $form['currency'] = $sheel->currency->pulldown('', '', 'draw-select', 'form[currency]', 'currencyid', '');
+        $form['companyemail'] = '';
+        $form['companyphone'] = '';
 
-        $companystatuses = array('active' => '{_active}', 'banned' => '{_banned}', 'moderated' => '{_moderated}', 'cancelled' => '{_cancelled}', 'suspended' => '{_suspended}');
-        $form['companystatus'] = $sheel->construct_pulldown('status', 'form[companystatus]', $companystatuses, '', 'class="draw-select"');
-        $form['tz'] = $sheel->construct_pulldown('tz', 'form[tz]', $tzlist, '', 'class="draw-select"');
+
+
+
         
         
     }
@@ -433,7 +448,6 @@ if (! empty($_SESSION['sheeldata']['user']['userid']) and $_SESSION['sheeldata']
                 $res['countrycode'] = $sheel->common_location->print_country_name($res['country']);
                 $res['switchadd'] = '<span class="badge badge--info title="{_add_item}"><a href="' . HTTPS_SERVER_ADMIN .'companies/items/add/' . $res['company_id'] . '/?view='.$fview.'&company_id=' . $res['company_id'] .'" data-no-turbolink>{_add}</a></span>';
                 $res['switchview'] = '<span class="badge badge--success" title="{_view_item}"><a href="' . HTTPS_SERVER_ADMIN .'companies/items/view/' . $res['company_id'] . '/?view='.$fview.'&company_id=' . $res['company_id'] .'" data-no-turbolink>{_view}</a></span>';
-                $res['profilesview'] = '<span class="badge badge--success" title="{_view_profiles}"><a href="' . HTTPS_SERVER_ADMIN .'companies/profiles/view/' . $res['company_id'] . '/?view='.$fview.'&company_id=' . $res['company_id'].'" data-no-turbolink>{_view}</a></span>';
                 
                 $companies[] = $res;
             }

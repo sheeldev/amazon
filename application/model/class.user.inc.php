@@ -21,11 +21,12 @@ class user
 	{
 		$profileid = 0;
 		$sql = $this->sheel->db->query("
-			SELECT id
-			FROM " . DB_PREFIX . "user_profiles
-			WHERE user_id = '" . intval($userid) . "'
-				AND type = 'billing'
-				AND isdefault = '1'
+			SELECT cp.id
+			FROM " . DB_PREFIX . "company_profiles cp
+			LEFT JOIN " . DB_PREFIX . "users u ON (cp.company_id = u.companyid)
+			WHERE u.user_id = '" . intval($userid) . "'
+				AND cp.type = 'billing'
+				AND cp.isdefault = '1'
 			LIMIT 1
 		", 0, null, __FILE__, __LINE__);
 		if ($this->sheel->db->num_rows($sql) > 0) {
@@ -39,11 +40,12 @@ class user
 	{
 		$profileid = 0;
 		$sql = $this->sheel->db->query("
-			SELECT id
-			FROM " . DB_PREFIX . "user_profiles
-			WHERE user_id = '" . intval($userid) . "'
-				AND type = 'shipping'
-				AND isdefault = '1'
+			SELECT cp.id
+			FROM " . DB_PREFIX . "company_profiles cp
+			LEFT JOIN " . DB_PREFIX . "users u ON (cp.company_id = u.companyid)
+			WHERE u.user_id = '" . intval($userid) . "'
+				AND cp.type = 'shipping'
+				AND cp.isdefault = '1'
 			LIMIT 1
 		", 0, null, __FILE__, __LINE__);
 		if ($this->sheel->db->num_rows($sql) > 0) {
@@ -57,11 +59,12 @@ class user
 	{
 		$array = array();
 		$sql = $this->sheel->db->query("
-			SELECT country
-			FROM " . DB_PREFIX . "user_profiles
-			WHERE user_id = '" . intval($userid) . "'
-				AND type = 'shipping'
-				AND status = '1'
+			SELECT cp.country
+			FROM " . DB_PREFIX . "company_profiles cp
+			LEFT JOIN " . DB_PREFIX . "users u ON (cp.company_id = u.companyid)
+			WHERE u.user_id = '" . intval($userid) . "'
+				AND cp.type = 'shipping'
+				AND cp.status = '1'
 		");
 		if ($this->sheel->db->num_rows($sql) > 0) {
 			while ($res = $this->sheel->db->fetch_array($sql, DB_ASSOC)) {
@@ -82,11 +85,12 @@ class user
 		$html = '';
 		$array = array();
 		$sql = $this->sheel->db->query("
-			SELECT country
-			FROM " . DB_PREFIX . "user_profiles
-			WHERE user_id = '" . intval($userid) . "'
-				AND type = 'shipping'
-				AND status = '1'
+			SELECT cp.country
+			FROM " . DB_PREFIX . "company_profiles cp
+			LEFT JOIN " . DB_PREFIX . "users u ON (cp.company_id = u.companyid)
+			WHERE u.user_id = '" . intval($userid) . "'
+				AND cp.type = 'shipping'
+				AND cp.status = '1'
 		");
 		if ($this->sheel->db->num_rows($sql) > 0) {
 			while ($res = $this->sheel->db->fetch_array($sql, DB_ASSOC)) {
